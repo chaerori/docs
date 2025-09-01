@@ -65,6 +65,19 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
     | [`io.dyte:core`](https://central.sonatype.com/artifact/io.dyte/core)              | [`com.cloudflare.realtimekit:core`](https://central.sonatype.com/artifact/com.cloudflare.realtimekit/core) |
     | [`io.dyte:uikit`](https://central.sonatype.com/artifact/io.dyte/uikit)            | [`com.cloudflare.realtimekit:ui-android`](https://central.sonatype.com/artifact/com.cloudflare.realtimekit/ui-android) |
   </TabItem>
+  <TabItem value="ios" label="iOS">
+    The following table maps the deprecated Dyte SDKs to their new Cloudflare RealtimeKit equivalents for iOS:
+    | Dyte SDK       | RealtimeKit SDK                                                   |
+    | -------------- | ----------------------------------------------------------------- |
+    | `DyteiOSCore`  | [`RealtimeKit`](https://github.com/dyte-in/RealtimeKitUI)         |
+    | `DyteUiKit`    | [`RealtimeKitUI`](https://github.com/dyte-in/RealtimeKitCoreiOS)  |
+
+    :::warning
+    We have deprecated [Cocoapods](https://blog.cocoapods.org/CocoaPods-Specs-Repo/) support in favor of Swift Package Manager. Please migrate to continue using our SDKs.
+
+    Check out our quickstart guides for [`RealtimeKit`](https://docs.realtime.cloudflare.com/ios-core#step-1-install-the-sdk) and [`RealtimeKitUI`](https://docs.realtime.cloudflare.com/ios/quickstart#step-1-install-the-sdk) for detailed installation instructions.
+    :::
+  </TabItem>
 </Tabs>
 
 ## Migration Steps
@@ -739,5 +752,67 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
     | `com.cloudflare.realtimekit.participants.RtkMeetingParticipant`     | `com.cloudflare.realtimekit.RtkMeetingParticipant`                     |
     | `com.cloudflare.realtimekit.platform.RtkPluginFile`                 | `com.cloudflare.realtimekit.plugins.RtkPluginFile`                     |
 
+  </TabItem>
+
+  <TabItem value="ios" label="iOS">
+      Migrating from Dyte to Cloudflare RealtimeKit is a straightforward process that mainly involves updating package names and renaming components and classes.
+
+      To manually migrate your project, follow these steps:
+
+      ### 1. Update Package Imports
+
+      In your source code, replace all Dyte package import paths with their corresponding RealtimeKit equivalents:
+
+      | Find          | Replace With    |
+      | ------------- | --------------- |
+      | `DyteiOSCore` | `RealtimeKit`   |
+      | `DyteUiKit`   | `RealtimeKitUI` |
+
+      ### 2. Update Naming Conventions
+
+      RealtimeKit introduces new naming conventions. Generally, replace `Dyte` with `RealtimeKit`, `RTK`, or `Rtk`, depending on the context.
+
+      :::info Naming Convention Summary
+      - **Main Class**: `Dyte` -> `RealtimeKit` (e.g., `DyteClient` -> `RealtimeKitClient`)
+      - **Core SDK Classes & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteMeetingType` → `RtkMeetingType`)
+      - **UI Kit Components & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteControlBarButton` → `RtkControlBarButton`)
+      :::
+
+      #### Core SDK Changes
+
+      To upgrade your codebase from Dyte to RealtimeKit (RTK), update your classes and listeners as follows. This guide highlights the most common changes; refer to the official documentation for exhaustive details.
+
+      ##### Class Renaming
+
+      | Find                            | Replace With                 |
+      |---------------------------------|------------------------------|
+      | `DyteClient`                    | `RealtimeKitClient`          |
+      | `DyteSelfParticipant`           | `RtkSelfParticipant`         |
+      | `DyteJoinedMeetingParticipant`  | `RtkRemoteParticipant`       |
+
+      ##### Listener Interface Renaming
+
+      Many event listener interfaces have been renamed for consistency. Update your implementations accordingly:
+
+      | Find                             | Replace With                  |
+      |----------------------------------|-------------------------------|
+      | `DyteSelfEventsListener`         | `RtkSelfEventListener`        |
+      | `DyteChatEventsListener`         | `RtkChatEventListener`        |
+      | `DyteLivestreamEventListener`    | `RtkLivestreamEventListener`  |
+      | `DyteMeetingRoomEventsListener`  | `RtkMeetingRoomEventListener` |
+      | `DyteParticipantsEventListener`  | `RtkParticipantsEventListener`|
+      | `DyteParticipantUpdateListener`  | `RtkParticipantUpdateListener`|
+      | `DytePluginEventsListener`       | `RtkPluginsEventListener`     |
+      | `DytePollsEventListener`         | `RtkPollsEventListener`       |
+      | `DyteRecordingEventsListener`    | `RtkRecordingEventListener`   |
+      | `DyteStageEventListener`         | `RtkStageEventListener`       |
+      | `DyteWaitlistEventsListener`     | `RtkWaitlistEventListener`    |
+      | `DyteDataUpdateListener`         | `RtkDataUpdateListener`       |
+
+      Constructor parameters such as `mobileClient` have also been renamed to `rtkClient`, among others.
+
+      #### UI Kit Changes
+
+      For all UI Kit components, types, and providers, replace `Dyte` with `Rtk` in their names.
   </TabItem>
 </Tabs>
