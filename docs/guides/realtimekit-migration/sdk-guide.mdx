@@ -58,6 +58,26 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
     | [`@dytesdk/react-native-core`](https://www.npmjs.com/package/@dytesdk/react-native-core)  | [`@cloudflare/realtimekit-react-native`](https://www.npmjs.com/package/@cloudflare/realtimekit-react-native)      |
     | [`@dytesdk/react-native-ui-kit`](https://www.npmjs.com/package/@dytesdk/react-native-ui-kit)      | [`@cloudflare/realtimekit-react-native-ui`](https://www.npmjs.com/package/@cloudflare/realtimekit-react-native-ui) |
   </TabItem>
+  <TabItem value="android" label="Android">
+    The following table maps the deprecated Dyte SDKs to their new Cloudflare RealtimeKit equivalents for Android:
+    | Dyte SDK                                                                          | RealtimeKit SDK                                                                                   |
+    | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+    | [`io.dyte:core`](https://central.sonatype.com/artifact/io.dyte/core)              | [`com.cloudflare.realtimekit:core`](https://central.sonatype.com/artifact/com.cloudflare.realtimekit/core) |
+    | [`io.dyte:uikit`](https://central.sonatype.com/artifact/io.dyte/uikit)            | [`com.cloudflare.realtimekit:ui-android`](https://central.sonatype.com/artifact/com.cloudflare.realtimekit/ui-android) |
+  </TabItem>
+  <TabItem value="ios" label="iOS">
+    The following table maps the deprecated Dyte SDKs to their new Cloudflare RealtimeKit equivalents for iOS:
+    | Dyte SDK       | RealtimeKit SDK                                                   |
+    | -------------- | ----------------------------------------------------------------- |
+    | `DyteiOSCore`  | [`RealtimeKit`](https://github.com/dyte-in/RealtimeKitUI)         |
+    | `DyteUiKit`    | [`RealtimeKitUI`](https://github.com/dyte-in/RealtimeKitCoreiOS)  |
+
+    :::warning
+    We have deprecated [Cocoapods](https://blog.cocoapods.org/CocoaPods-Specs-Repo/) support in favor of Swift Package Manager. Please migrate to continue using our SDKs.
+
+    Check out our quickstart guides for [`RealtimeKit`](https://docs.realtime.cloudflare.com/ios-core#step-1-install-the-sdk) and [`RealtimeKitUI`](https://docs.realtime.cloudflare.com/ios/quickstart#step-1-install-the-sdk) for detailed installation instructions.
+    :::
+  </TabItem>
 </Tabs>
 
 ## Migration Steps
@@ -533,11 +553,11 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
     Install these **required** dependencies as per your ```react-native``` version.
 
     - ```react-native-safe-area-context```
-      - **react-native (0.64 - 0.74)** : 
+      - **react-native (0.64 - 0.74)** :
         ```bash
         npm install react-native-safe-area-context@^4.0.0
         ```
-      - **react-native (>= 0.74)** : 
+      - **react-native (>= 0.74)** :
         ```bash
         npm install react-native-safe-area-context@^5.0.0
         ```
@@ -647,5 +667,152 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
     :::note Custom Design System
     If you are using a custom design system, remember to rename `provideDyteDesignSystem` to `provideRtkDesignSystem`.
     :::
+  </TabItem>
+  <TabItem value="android" label="Android">
+    Migrating from Dyte to Cloudflare RealtimeKit is straightforward, as it primarily involves updating package names and renaming imports and type prefixes.
+
+    To perform the migration manually, please follow the steps outlined below.
+
+    ### 1. Update package coordinates
+
+    Use the table above to update the package coordinates to the latest RealtimeKit versions.
+
+    ### 2. Update import paths
+
+    In your project's source code, perform a find-and-replace for all Dyte package import paths with their new RealtimeKit equivalents.
+
+    | Find                                   | Replace With                               |
+    | -------------------------------------- | ------------------------------------------ |
+    | `io.dyte.core`                         | `com.cloudflare.realtimekit`               |
+    | `dyte.io.uikit`                        | `com.cloudflare.realtimekit.ui`            |
+
+    ### 3. Update codebase to new naming conventions
+
+    The migration introduces a new set of naming conventions. The general rule is to replace `Dyte` with `Rtk`.
+
+    :::info Naming Convention Summary
+    - **Main Class**: `Dyte` -> `RealtimeKit` (e.g., `DyteClient` -> `RealtimeKitClient`)
+    - **Core SDK Classes & Types**: `Dyte` -> `Rtk` (e.g., `DyteSelfParticipant` -> `RtkSelfParticipant`)
+    - **UI Kit Components & Types**: `Dyte` -> `Rtk` (e.g., `DyteLabel` -> `RtkLabel`)
+    :::
+
+    As part of the migration to RealtimeKit, we have also simplified the package structure so there will be more manual changes required after a bulk replace. A non-exhaustive table of these changes is provided below for your reference.
+
+    | Find                                                                | Replace With                                                           |
+    | ------------------------------------------------------------------- | ---------------------------------------------------------------------- |
+    | `com.cloudflare.realtimekit.RtkPluginWebView`                       | `com.cloudflare.realtimekit.plugins.RtkPluginWebView`                  |
+    | `com.cloudflare.realtimekit.VideoView`                              | `com.cloudflare.realtimekit.platform.VideoView`                        |
+    | `com.cloudflare.realtimekit.controllers.MeetingConfig`              | `com.cloudflare.realtimekit.meta.MeetingConfig`                        |
+    | `com.cloudflare.realtimekit.controllers.RtkLivestreamData`          | `com.cloudflare.realtimekit.livestream.RtkLivestreamData`              |
+    | `com.cloudflare.realtimekit.controllers.RtkRecordingState`          | `com.cloudflare.realtimekit.recording.RecordingState`                  |
+    | `com.cloudflare.realtimekit.controllers.StageStatus`                | `com.cloudflare.realtimekit.stage.StageStatus`                         |
+    | `com.cloudflare.realtimekit.controllers.polls.IPollsController`     | `com.cloudflare.realtimekit.polls.RtkPolls`                            |
+    | `com.cloudflare.realtimekit.feat.RealtimeKitChatExtensionsKt`       | `com.cloudflare.realtimekit.chat.RealtimeKitChatExtensionsKt`          |
+    | `com.cloudflare.realtimekit.feat.RtkChat`                           | `com.cloudflare.realtimekit.chat.RtkChat`                              |
+    | `com.cloudflare.realtimekit.feat.RtkChatMessage`                    | `com.cloudflare.realtimekit.chat.ChatMessage`                          |
+    | `com.cloudflare.realtimekit.feat.RtkChatMessageKt`                  | `com.cloudflare.realtimekit.chat.ChatMessageKt`                        |
+    | `com.cloudflare.realtimekit.feat.RtkFileMessage`                    | `com.cloudflare.realtimekit.chat.FileMessage`                          |
+    | `com.cloudflare.realtimekit.feat.RtkImageMessage`                   | `com.cloudflare.realtimekit.chat.ImageMessage`                         |
+    | `com.cloudflare.realtimekit.feat.RtkLivestream`                     | `com.cloudflare.realtimekit.livestream.RtkLivestream`                  |
+    | `com.cloudflare.realtimekit.feat.RtkMessageType`                    | `com.cloudflare.realtimekit.chat.ChatMessageType`                      |
+    | `com.cloudflare.realtimekit.feat.RtkMeta`                           | `com.cloudflare.realtimekit.meta.RtkMeta`                              |
+    | `com.cloudflare.realtimekit.feat.RtkPlugin`                         | `com.cloudflare.realtimekit.plugins.RtkPlugin`                         |
+    | `com.cloudflare.realtimekit.feat.RtkPlugins`                        | `com.cloudflare.realtimekit.plugins.RtkPlugins`                        |
+    | `com.cloudflare.realtimekit.feat.RtkPoll`                           | `com.cloudflare.realtimekit.polls.Poll`                                |
+    | `com.cloudflare.realtimekit.feat.RtkPollOption`                     | `com.cloudflare.realtimekit.polls.PollOption`                          |
+    | `com.cloudflare.realtimekit.feat.RtkPollVote`                       | `com.cloudflare.realtimekit.polls.PollVote`                            |
+    | `com.cloudflare.realtimekit.feat.RtkPolls`                          | `com.cloudflare.realtimekit.polls.RtkPolls`                            |
+    | `com.cloudflare.realtimekit.feat.RtkRecording`                      | `com.cloudflare.realtimekit.recording.RtkRecording`                    |
+    | `com.cloudflare.realtimekit.feat.RtkStage`                          | `com.cloudflare.realtimekit.stage.RtkStage`                            |
+    | `com.cloudflare.realtimekit.feat.RtkTextMessage`                    | `com.cloudflare.realtimekit.chat.TextMessage`                          |
+    | `com.cloudflare.realtimekit.listeners.ExternalEventListener`        | `com.cloudflare.realtimekit.events.ExternalEventListener`              |
+    | `com.cloudflare.realtimekit.listeners.RtkChatEventsListener`        | `com.cloudflare.realtimekit.chat.RtkChatEventListener`                 |
+    | `com.cloudflare.realtimekit.listeners.RtkConnectionEventListener`   | `com.cloudflare.realtimekit.RtkConnectionEventListener`                |
+    | `com.cloudflare.realtimekit.listeners.RtkDataUpdateListener`        | `com.cloudflare.realtimekit.events.RtkDataUpdateListener`              |
+    | `com.cloudflare.realtimekit.listeners.RtkLivestreamEventListener`   | `com.cloudflare.realtimekit.livestream.RtkLivestreamEventListener`     |
+    | `com.cloudflare.realtimekit.listeners.RtkParticipantUpdateListener` | `com.cloudflare.realtimekit.participants.RtkParticipantUpdateListener` |
+    | `com.cloudflare.realtimekit.listeners.RtkParticipantsEventListener` | `com.cloudflare.realtimekit.participants.RtkParticipantsEventListener` |
+    | `com.cloudflare.realtimekit.listeners.RtkPluginEventsListener`      | `com.cloudflare.realtimekit.plugins.RtkPluginsEventListener`           |
+    | `com.cloudflare.realtimekit.listeners.RtkPollsEventListener`        | `com.cloudflare.realtimekit.polls.RtkPollsEventListener`               |
+    | `com.cloudflare.realtimekit.listeners.RtkRecordingEventsListener`   | `com.cloudflare.realtimekit.recording.RtkRecordingEventListener`       |
+    | `com.cloudflare.realtimekit.listeners.RtkSelfEventsListener`        | `com.cloudflare.realtimekit.self.RtkSelfEventListener`                 |
+    | `com.cloudflare.realtimekit.listeners.RtkStageEventListener`        | `com.cloudflare.realtimekit.stage.RtkStageEventListener`               |
+    | `com.cloudflare.realtimekit.listeners.RtkWaitlistEventsListener`    | `com.cloudflare.realtimekit.waitingroom.RtkWaitlistEventListener`      |
+    | `com.cloudflare.realtimekit.media.ProducerType`                     | `com.cloudflare.realtimekit.media.sfu.ProducerType`                    |
+    | `com.cloudflare.realtimekit.models.ActiveTabType`                   | `com.cloudflare.realtimekit.spotlight.ActiveTabType`                   |
+    | `com.cloudflare.realtimekit.models.AudioDeviceType`                 | `com.cloudflare.realtimekit.media.AudioDeviceType`                     |
+    | `com.cloudflare.realtimekit.models.RtkParticipant`                  | `com.cloudflare.realtimekit.RtkParticipant`                            |
+    | `com.cloudflare.realtimekit.models.RtkParticipants`                 | `com.cloudflare.realtimekit.participants.RtkParticipants`              |
+    | `com.cloudflare.realtimekit.models.RtkSelfParticipant`              | `com.cloudflare.realtimekit.self.RtkSelfParticipant`                   |
+    | `com.cloudflare.realtimekit.models.VideoDeviceType`                 | `com.cloudflare.realtimekit.media.VideoDeviceType`                     |
+    | `com.cloudflare.realtimekit.models.VideoScaleType`                  | `com.cloudflare.realtimekit.media.VideoScaleType`                      |
+    | `com.cloudflare.realtimekit.models.WaitListStatus`                  | `com.cloudflare.realtimekit.waitingroom.WaitListStatus`                |
+    | `com.cloudflare.realtimekit.network.info.GridInfo`                  | `com.cloudflare.realtimekit.participants.GridInfo`                     |
+    | `com.cloudflare.realtimekit.participants.ParticipantFlags`          | `com.cloudflare.realtimekit.ParticipantFlags`                          |
+    | `com.cloudflare.realtimekit.participants.RtkMeetingParticipant`     | `com.cloudflare.realtimekit.RtkMeetingParticipant`                     |
+    | `com.cloudflare.realtimekit.platform.RtkPluginFile`                 | `com.cloudflare.realtimekit.plugins.RtkPluginFile`                     |
+
+  </TabItem>
+
+  <TabItem value="ios" label="iOS">
+      Migrating from Dyte to Cloudflare RealtimeKit is a straightforward process that mainly involves updating package names and renaming components and classes.
+
+      To manually migrate your project, follow these steps:
+
+      ### 1. Update Package Imports
+
+      In your source code, replace all Dyte package import paths with their corresponding RealtimeKit equivalents:
+
+      | Find          | Replace With    |
+      | ------------- | --------------- |
+      | `DyteiOSCore` | `RealtimeKit`   |
+      | `DyteUiKit`   | `RealtimeKitUI` |
+
+      ### 2. Update Naming Conventions
+
+      RealtimeKit introduces new naming conventions. Generally, replace `Dyte` with `RealtimeKit`, `RTK`, or `Rtk`, depending on the context.
+
+      :::info Naming Convention Summary
+      - **Main Class**: `Dyte` -> `RealtimeKit` (e.g., `DyteClient` -> `RealtimeKitClient`)
+      - **Core SDK Classes & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteMeetingType` → `RtkMeetingType`)
+      - **UI Kit Components & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteControlBarButton` → `RtkControlBarButton`)
+      :::
+
+      #### Core SDK Changes
+
+      To upgrade your codebase from Dyte to RealtimeKit (RTK), update your classes and listeners as follows. This guide highlights the most common changes; refer to the official documentation for exhaustive details.
+
+      ##### Class Renaming
+
+      | Find                            | Replace With                 |
+      |---------------------------------|------------------------------|
+      | `DyteClient`                    | `RealtimeKitClient`          |
+      | `DyteSelfParticipant`           | `RtkSelfParticipant`         |
+      | `DyteJoinedMeetingParticipant`  | `RtkRemoteParticipant`       |
+
+      ##### Listener Interface Renaming
+
+      Many event listener interfaces have been renamed for consistency. Update your implementations accordingly:
+
+      | Find                             | Replace With                  |
+      |----------------------------------|-------------------------------|
+      | `DyteSelfEventsListener`         | `RtkSelfEventListener`        |
+      | `DyteChatEventsListener`         | `RtkChatEventListener`        |
+      | `DyteLivestreamEventListener`    | `RtkLivestreamEventListener`  |
+      | `DyteMeetingRoomEventsListener`  | `RtkMeetingRoomEventListener` |
+      | `DyteParticipantsEventListener`  | `RtkParticipantsEventListener`|
+      | `DyteParticipantUpdateListener`  | `RtkParticipantUpdateListener`|
+      | `DytePluginEventsListener`       | `RtkPluginsEventListener`     |
+      | `DytePollsEventListener`         | `RtkPollsEventListener`       |
+      | `DyteRecordingEventsListener`    | `RtkRecordingEventListener`   |
+      | `DyteStageEventListener`         | `RtkStageEventListener`       |
+      | `DyteWaitlistEventsListener`     | `RtkWaitlistEventListener`    |
+      | `DyteDataUpdateListener`         | `RtkDataUpdateListener`       |
+
+      Constructor parameters such as `mobileClient` have also been renamed to `rtkClient`, among others.
+
+      #### UI Kit Changes
+
+      For all UI Kit components, types, and providers, replace `Dyte` with `Rtk` in their names.
   </TabItem>
 </Tabs>
