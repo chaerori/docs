@@ -773,19 +773,41 @@ The Dyte SDKs are now in maintenance mode and will no longer receive feature upd
       RealtimeKit introduces new naming conventions. Generally, replace `Dyte` with `RealtimeKit`, `RTK`, or `Rtk`, depending on the context.
 
       :::info Naming Convention Summary
+      - **Main Class**: `Dyte` -> `RealtimeKit` (e.g., `DyteClient` -> `RealtimeKitClient`)
       - **Core SDK Classes & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteMeetingType` → `RtkMeetingType`)
       - **UI Kit Components & Types**: Replace `Dyte` with `Rtk` (e.g., `DyteControlBarButton` → `RtkControlBarButton`)
       :::
 
       #### Core SDK Changes
 
-      Update your classes by replacing `Dyte` with `RealtimeKit` or `Rtk`. Here are some examples (not exhaustive):
+      To upgrade your codebase from Dyte to RealtimeKit (RTK), update your classes and listeners as follows. This guide highlights the most common changes; refer to the official documentation for exhaustive details.
 
-      | Find                     | Replace With             |
-      | ------------------------ | ------------------------ |
-      | `DyteClient`             | `RealtimeKitClient`      |
-      | `DyteSelfParticipant`    | `RtkSelfParticipant`     |
-      | `DyteSelfEventsListener` | `RtkSelfEventListener`   |
+      ##### Class Renaming
+
+      | Find                            | Replace With                 |
+      |---------------------------------|------------------------------|
+      | `DyteClient`                    | `RealtimeKitClient`          |
+      | `DyteSelfParticipant`           | `RtkSelfParticipant`         |
+      | `DyteJoinedMeetingParticipant`  | `RtkRemoteParticipant`       |
+
+      ##### Listener Interface Renaming
+
+      Many event listener interfaces have been renamed for consistency. Update your implementations accordingly:
+
+      | Find                             | Replace With                  |
+      |----------------------------------|-------------------------------|
+      | `DyteSelfEventsListener`         | `RtkSelfEventListener`        |
+      | `DyteChatEventsListener`         | `RtkChatEventListener`        |
+      | `DyteLivestreamEventListener`    | `RtkLivestreamEventListener`  |
+      | `DyteMeetingRoomEventsListener`  | `RtkMeetingRoomEventListener` |
+      | `DyteParticipantsEventListener`  | `RtkParticipantsEventListener`|
+      | `DyteParticipantUpdateListener`  | `RtkParticipantUpdateListener`|
+      | `DytePluginEventsListener`       | `RtkPluginsEventListener`     |
+      | `DytePollsEventListener`         | `RtkPollsEventListener`       |
+      | `DyteRecordingEventsListener`    | `RtkRecordingEventListener`   |
+      | `DyteStageEventListener`         | `RtkStageEventListener`       |
+      | `DyteWaitlistEventsListener`     | `RtkWaitlistEventListener`    |
+      | `DyteDataUpdateListener`         | `RtkDataUpdateListener`       |
 
       Constructor parameters such as `mobileClient` have also been renamed to `rtkClient`, among others.
 
