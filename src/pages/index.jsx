@@ -16,7 +16,7 @@ import PhHelloBar from '../components/homepage/PhHelloBar';
 export default function Homepage() {
   return (
     <Layout
-      title="Dyte Documentation"
+      //title="카테노이드 서포트 센터"
       wrapperClassName="homepage flex flex-col"
       noFooter
     >

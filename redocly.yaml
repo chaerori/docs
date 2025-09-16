@@ -1,0 +1,46 @@
+apis:
+  kollus-vod:
+    root: static/api/kollus-vod/openapi.yaml
+  kollus-live:
+    root: static/api/kollus-live/openapi.yaml
+
+lint:
+  extends:
+    - recommended
+  rules:
+    no-unused-components: error
+    no-unresolved-refs: error
+    operation-operationId: error
+    operation-description: error
+    operation-summary: error
+    operation-tags: error
+    path-params: error
+    tag-description: error
+    info-description: error
+    info-contact: error
+    info-license: error
+
+theme:
+  openapi:
+    theme:
+      colors:
+        primary:
+          main: '#2563eb'
+        text:
+          primary: '#1f2937'
+          secondary: '#6b7280'
+        background:
+          paper: '#ffffff'
+          default: '#f9fafb'
+      typography:
+        fontSize: '14px'
+        fontFamily: 'Inter, system-ui, sans-serif'
+        headings:
+          fontFamily: 'Inter, system-ui, sans-serif'
+          fontWeight: '600'
+      sidebar:
+        backgroundColor: '#f8fafc'
+        textColor: '#374151'
+      rightPanel:
+        backgroundColor: '#f8fafc'
+        textColor: '#374151'

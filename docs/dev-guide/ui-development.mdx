@@ -1,0 +1,215 @@
+---
+title: UI 개발
+description: 사용자 인터페이스 개발 가이드입니다.
+---
+
+# UI 개발
+
+사용자 인터페이스 개발에 대한 가이드입니다.
+
+## 컴포넌트 구조
+
+### 기본 컴포넌트
+
+```jsx
+import React from 'react';
+
+const Button = ({ children, onClick, variant = 'primary' }) => {
+  return (
+    <button 
+      className={`btn btn-${variant}`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+### 폼 컴포넌트
+
+```jsx
+import React, { useState } from 'react';
+
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 폼 데이터 처리
+    console.log(formData);
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="name"
+        placeholder="이름"
+        value={formData.name}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="이메일"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="메시지"
+        value={formData.message}
+        onChange={handleChange}
+        required
+      />
+      <Button type="submit">전송</Button>
+    </form>
+  );
+};
+```
+
+## 스타일링
+
+### CSS 모듈 사용
+
+```css
+/* Button.module.css */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btnPrimary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btnSecondary {
+  background-color: #6c757d;
+  color: white;
+}
+```
+
+### 반응형 디자인
+
+```css
+/* 모바일 우선 접근법 */
+.container {
+  width: 100%;
+  padding: 0 15px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 750px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 970px;
+  }
+}
+```
+
+## 상태 관리
+
+### React Hooks 사용
+
+```jsx
+import React, { useState, useEffect } from 'react';
+
+const UserProfile = () => {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/user');
+        const userData = await response.json();
+        setUser(userData);
+      } catch (error) {
+        console.error('사용자 정보 로드 실패:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading) return <div>로딩 중...</div>;
+  if (!user) return <div>사용자 정보를 찾을 수 없습니다.</div>;
+
+  return (
+    <div>
+      <h1>{user.name}</h1>
+      <p>{user.email}</p>
+    </div>
+  );
+};
+```
+
+## 접근성 (Accessibility)
+
+### ARIA 속성 사용
+
+```jsx
+const Modal = ({ isOpen, onClose, children }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div 
+      className="modal-overlay"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      <div 
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 id="modal-title">모달 제목</h2>
+        {children}
+        <button onClick={onClose} aria-label="모달 닫기">
+          ×
+        </button>
+      </div>
+    </div>
+  );
+};
+```
+
+## 다음 단계
+
+UI 개발이 완료되면 [배포](/dev-guide/deployment) 가이드를 확인하세요.

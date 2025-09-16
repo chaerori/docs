@@ -7,10 +7,9 @@ const code_themes = {
 
 /** @type {import('@docusaurus/types').Config} */
 const meta = {
-  title: 'Dyte Docs',
-  tagline:
-    'Explore comprehensive documentation for Dyte, including guides, references, and best practices.',
-  url: 'https://docs.dyte.io',
+  title: '카테노이드 서포트 센터',
+  tagline: 'catenoid documentation',
+  url: 'https://chaerori.github.io',
   baseUrl: '/',
   favicon: '/favicon.ico',
   i18n: {
@@ -35,6 +34,27 @@ const docs = [
         label: '1.x.x',
       },
     },
+  },
+  {
+    id: 'demo-player',
+    path: 'docs/demo-player',
+    routeBasePath: '/demo-player',
+    sidebarPath: false,
+  },
+  {
+    id: 'dev-guide',
+    path: 'docs/dev-guide',
+    routeBasePath: '/dev-guide',
+  },
+  {
+    id: 'api-vod',
+    path: 'docs/api/vod',
+    routeBasePath: '/api/vod',
+  },
+  {
+    id: 'api-live',
+    path: 'docs/api/live',
+    routeBasePath: '/api/live',
   },
 
   // Community packages
@@ -504,22 +524,38 @@ const config = {
         },
       },
       navbar: {
+        title: '서포트 센터',
         logo: {
-          href: '/',
-          src: '/logo/light.svg',
-          srcDark: '/logo/dark.svg',
-          alt: 'Dyte Documentation | Dyte Docs',
-          height: '40px',
-          width: '101px',
+          alt: '',
+          src: '/favicon.ico',
         },
         items: [
           {
-            label: 'Guides',
+            label: '서비스 가이드',
             to: 'guides',
             className: 'guides-top-header',
           },
           {
-            label: 'SDKs',
+            label: '개발 가이드',
+            to: '/dev-guide',
+          },
+          {
+            label: 'API 레퍼런스',
+            type: 'dropdown',
+            className: 'dyte-dropdown',
+            items: [
+              {
+                label: 'Kollus VOD API',
+                to: '/api/vod',
+              },
+              {
+                label: 'Kollus Live API',
+                to: '/api/live',
+              },
+            ],
+          },
+          {
+            label: '플레이어 SDK',
             type: 'dropdown',
             className: 'dyte-dropdown',
             items: [
@@ -531,39 +567,20 @@ const config = {
             ],
           },
           {
-            label: 'REST API',
-            to: '/api/',
+            label: '데모 플레이어',
+            to: '/demo-player',
           },
           {
-            label: 'Resources',
-            type: 'dropdown',
-            className: 'dyte-dropdown resources-dropdown',
-            items: [
-              {
-                type: 'html',
-                value: resourcesHTML,
-                className: 'dyte-dropdown',
-              },
-            ],
+            label: '문의하기',
+            to: 'https://www.catenoid.net/ko/contact/',
           },
-          {
-            label: 'Support',
-            to: 'https://dyte.io/contact?type=docs',
-          },
-
           {
             type: 'search',
             position: 'right',
           },
           {
-            label: 'Book a demo',
-            href: 'https://dyte.io/schedule-demo',
-            position: 'right',
-            className: 'navbar-book-demo',
-          },
-          {
-            label: 'Sign Up',
-            href: 'https://dev.dyte.io/register',
+            label: '가입하기',
+            href: 'https://www.catenoid.net/ko/contact/',
             position: 'right',
             className: 'dev-portal-signup dev-portal-link',
           },
@@ -630,7 +647,7 @@ const config = {
             ],
           },
         ],
-        copyright: 'Copyright © Dyte since 2023. All rights reserved.',
+        copyright: `Copyright © ${new Date().getFullYear()} Catenoid Inc. All rights reserved.`
       },
       prism: {
         theme: code_themes.light,

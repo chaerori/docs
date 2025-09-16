@@ -1,0 +1,104 @@
+---
+title: Kollus VOD API
+description: Kollus VOD API 레퍼런스 문서입니다.
+---
+
+# Kollus VOD API
+
+Kollus VOD API를 사용하여 비디오 온 디맨드 서비스를 구현할 수 있습니다.
+
+## 개요
+
+Kollus VOD API는 다음과 같은 기능을 제공합니다:
+
+- 비디오 업로드 및 관리
+- 스트리밍 URL 생성
+- 재생 통계 수집
+- DRM 보호 기능
+- 다중 해상도 지원
+
+## 인증
+
+모든 API 요청에는 API 키가 필요합니다.
+
+```bash
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+     https://api.kollus.com/v1/videos
+```
+
+## 기본 엔드포인트
+
+### 비디오 목록 조회
+
+```http
+GET /v1/videos
+```
+
+**응답 예시:**
+```json
+{
+  "status": "success",
+  "data": {
+    "videos": [
+      {
+        "id": "video_123",
+        "title": "샘플 비디오",
+        "duration": 120,
+        "created_at": "2024-01-01T00:00:00Z",
+        "status": "ready"
+      }
+    ],
+    "pagination": {
+      "page": 1,
+      "per_page": 20,
+      "total": 100
+    }
+  }
+}
+```
+
+### 비디오 업로드
+
+```http
+POST /v1/videos/upload
+```
+
+**요청 예시:**
+```bash
+curl -X POST \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -F "file=@video.mp4" \
+  -F "title=샘플 비디오" \
+  -F "description=비디오 설명" \
+  https://api.kollus.com/v1/videos/upload
+```
+
+### 스트리밍 URL 생성
+
+```http
+POST /v1/videos/{video_id}/stream
+```
+
+**요청 예시:**
+```json
+{
+  "quality": "1080p",
+  "expires_in": 3600,
+  "drm_enabled": true
+}
+```
+
+## 에러 코드
+
+| 코드 | 설명 |
+|------|------|
+| 400 | 잘못된 요청 |
+| 401 | 인증 실패 |
+| 403 | 권한 없음 |
+| 404 | 리소스 없음 |
+| 500 | 서버 오류 |
+
+## 다음 단계
+
+- [Kollus Live API](/api/live) - 라이브 스트리밍 API
+- [개발 가이드](/dev-guide) - 개발 시작하기
