@@ -56,13 +56,13 @@ const docs = [
     path: 'docs/api/live',
     routeBasePath: '/api/live',
   },
-
+/*
   // Community packages
   {
     id: 'community-packages',
     path: 'docs/community-packages',
     routeBasePath: '/community-packages',
-  },
+  },*/
 
   // Web UI Kits
   {
