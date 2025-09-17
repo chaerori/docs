@@ -1214,6 +1214,25 @@ html[data-theme='dark'] .livestream_sidebar_header > div > a::before {
   border-width: 1px;
 }
 
+/* 언어 선택 드롭다운 스타일 */
+.navbar__item--locale {
+  @apply mr-2;
+}
+
+.navbar__item--locale .navbar__link {
+  @apply text-sm font-medium;
+}
+
+.navbar__item--locale .navbar__link:hover {
+  @apply text-primary;
+}
+
+/* 언어 선택 드롭다운 아이콘 */
+.navbar__item--locale .navbar__link::before {
+  content: '🌐';
+  margin-right: 4px;
+}
+
 .pagination-nav__sublabel {
   display: none;
 }

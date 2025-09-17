@@ -13,9 +13,26 @@ const meta = {
   baseUrl: '/',
   favicon: '/favicon.ico',
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en'],
+    defaultLocale: 'ko',
+    locales: ['ko', 'en'],
+    localeConfigs: {
+      ko: {
+        label: '한국어',
+        direction: 'ltr',
+        htmlLang: 'ko-KR',
+        calendar: 'gregory',
+        path: 'ko',
+      },
+      en: {
+        label: 'English',
+        direction: 'ltr',
+        htmlLang: 'en-US',
+        calendar: 'gregory',
+        path: 'en',
+      },
+    },
   },
+  titleDelimiter: '|',
 };
 
 /** @type {import('@docusaurus/plugin-content-docs').Options[]} */
@@ -531,6 +548,7 @@ const config = {
           alt: '',
           src: '/favicon.ico',
         },
+        hideOnScroll: true,
         items: [
           {
             label: '서비스 가이드',
@@ -585,6 +603,12 @@ const config = {
             href: 'https://www.catenoid.net/ko/contact/',
             position: 'right',
             className: 'dev-portal-signup dev-portal-link',
+          },
+          {
+            type: 'localeDropdown',
+            position: 'right',
+            dropdownItemsAfter: [],
+            dropdownItemsBefore: [],
           },
         ],
       },
