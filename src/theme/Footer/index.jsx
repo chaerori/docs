@@ -10,7 +10,7 @@ export default function FooterWrapper(props) {
 
   return (
     <>
-      <HomeFooter />
+      
       {/* <Footer {...props} /> */}
 
       <Head>

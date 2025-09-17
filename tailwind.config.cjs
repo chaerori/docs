@@ -25,9 +25,12 @@ module.exports = {
       colors: {
         primary: {
           DEFAULT:
-            'rgb(var(--docs-color-primary-200, 33 96 253) / <alpha-value>)',
-          100: 'rgb(var(--docs-color-primary-100, 26 144 255) / <alpha-value>)',
-          200: 'rgb(var(--docs-color-primary-200, 33 96 253) / <alpha-value>)',
+            'rgb(var(--docs-color-primary-100, 118 72 163) / <alpha-value>)',
+          100: 'rgb(var(--docs-color-primary-100, 118 72 163) / <alpha-value>)',
+          200: 'rgb(var(--docs-color-primary-200, 102 58 143) / <alpha-value>)',
+          300: 'rgb(var(--docs-color-primary-300, 86 44 123) / <alpha-value>)',
+          400: 'rgb(var(--docs-color-primary-400, 134 86 183) / <alpha-value>)',
+          500: 'rgb(var(--docs-color-primary-500, 150 100 203) / <alpha-value>)',
         },
         secondary: {
           DEFAULT:

@@ -42,20 +42,7 @@ export default function Homepage() {
 
       <HeroSection />
 
-      <GuidesAndSamples />
-
-      <SDKs />
-
-      <APIReferenceSection />
-
-      <div className="z-0">
-        <ResourcesSection />
-        <HelpSection className="-mb-48" />
-      </div>
-
-      <CommunitySection />
-
-      <HomeFooter />
+      
     </Layout>
   );
 }

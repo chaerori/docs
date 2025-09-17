@@ -491,6 +491,8 @@ const config = {
           path: 'docs/guides',
           id: 'guides',
           routeBasePath: '/guides',
+          sidebarPath: require.resolve('./sidebars-guides.js'),
+          sidebarCollapsible: true,
           ...defaultSettings,
         },
         blog: false,
@@ -587,66 +589,7 @@ const config = {
         ],
       },
       footer: {
-        logo: {
-          href: '/',
-          src: '/logo/light.svg',
-          srcDark: '/logo/dark.svg',
-          alt: 'Dyte Documentation | Dyte Docs',
-          height: '36px',
-        },
-        links: [
-          {
-            title: 'Product',
-            items: [
-              {
-                label: 'Demo',
-                href: 'https://app.dyte.io',
-              },
-              {
-                label: 'Developer Portal',
-                href: 'https://dev.dyte.io',
-              },
-              {
-                label: 'Pricing',
-                href: 'https://dyte.io/#pricing',
-              },
-            ],
-          },
-          {
-            title: 'Company',
-            items: [
-              {
-                label: 'About Us',
-                href: 'https://dyte.io',
-              },
-              {
-                label: 'Join Us',
-                href: 'https://dyte.freshteam.com/jobs',
-              },
-              {
-                label: 'Privacy Policy',
-                href: 'https://dyte.io/privacy-policy',
-              },
-              {
-                label: 'Contact Us',
-                href: 'https://dyte.io/contact',
-              },
-            ],
-          },
-          {
-            title: 'Resources',
-            items: [
-              {
-                label: 'Documentation',
-                href: '/',
-              },
-              {
-                label: 'Blog',
-                href: 'https://dyte.io/blog',
-              },
-            ],
-          },
-        ],
+        style: 'dark',
         copyright: `Copyright © ${new Date().getFullYear()} Catenoid Inc. All rights reserved.`
       },
       prism: {
