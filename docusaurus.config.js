@@ -580,9 +580,12 @@ const config = {
             className: 'dyte-dropdown',
             items: [
               {
-                type: 'html',
-                value: sdksHTML,
-                className: 'dyte-dropdown',
+                label: 'iOS',
+                to: '/ios',
+              },
+              {
+                label: 'Android',
+                to: '/android',
               },
             ],
           },
