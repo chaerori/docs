@@ -22,8 +22,8 @@ const PRODUCTS = [
     title: 'Kollus Live',
     icon: VideoRegular,
     links: [
-      { label: '서비스 가이드', href: '/guides/voice-conf/intro-voice-conf'},
-      { label: '개발 가이드', href: '/dev-guide/kollus-live/api-integration' }
+      { label: 'Console 시작하기', href: '/guides/voice-conf/intro-voice-conf'},
+      { label: 'API 연동 시작하기', href: '/dev-guide/kollus-live/api-integration' }
     ]
   },
   {
