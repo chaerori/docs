@@ -1,10 +1,10 @@
 {
-  "title": "Support Center",
-  "item.label.서비스 가이드": "Service Guides",
-  "item.label.개발 가이드": "Development Guides",
-  "item.label.API 레퍼런스": "API Reference",
-  "item.label.플레이어 SDK": "Player SDK",
-  "item.label.데모 플레이어": "Demo Player",
-  "item.label.문의하기": "Contact",
-  "item.label.가입하기": "Sign Up"
+  "title": { "message": "Support Center" },
+  "item.label.서비스 가이드": { "message": "Service Guides" },
+  "item.label.개발 가이드": { "message": "Development Guides" },
+  "item.label.API 레퍼런스": { "message": "API Reference" },
+  "item.label.플레이어 SDK": { "message": "Player SDK" },
+  "item.label.데모 플레이어": { "message": "Demo Player" },
+  "item.label.문의하기": { "message": "Contact" },
+  "item.label.가입하기": { "message": "Sign Up" }
 }

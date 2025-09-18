@@ -15,7 +15,7 @@ const PRODUCTS = [
     icon: VideoRegular,
     links: [
       { label: '서비스 가이드', href: '/guides/live-video/intro-video-conf'},
-      { label: '개발 가이드', href: '/dev-guide/api-integration' }
+      { label: '개발 가이드', href: '/dev-guide/kollus-vod/api-integration' }
     ]
   },
   {
@@ -23,7 +23,7 @@ const PRODUCTS = [
     icon: VideoRegular,
     links: [
       { label: '서비스 가이드', href: '/guides/voice-conf/intro-voice-conf'},
-      { label: '개발 가이드', href: '/dev-guide/deployment' }
+      { label: '개발 가이드', href: '/dev-guide/kollus-live/api-integration' }
     ]
   },
   {
