@@ -1,5 +1,11 @@
 // Add external link icon to specific sidebar items
-(function() {
+// This module only runs in the browser
+export default function externalLinkIcon() {
+  // Double check we're in browser environment
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
+  }
+
   function addExternalLinkIcons() {
     // Find all menu links
     const menuLinks = document.querySelectorAll('.menu__link');
@@ -33,4 +39,4 @@
     childList: true,
     subtree: true
   });
-})();
+}
