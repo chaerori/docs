@@ -1,7 +1,21 @@
 ---
-title: Get your keys
+title: Kollus VOD Console로 이동하기
 slug: /live-video/get-started
-sidebar_position: 2
+sidebar_position: 1
 ---
 
-To get started with creating live video calls from Dyte, make sure to finish these steps and then move on to integrating Dyte in your application.
+import { useEffect } from 'react';
+
+export default function GetYourKeys() {
+  useEffect(() => {
+    // Kollus VOD Console로 리다이렉트
+    window.location.href = 'https://c-kr.kollus.com/login';
+  }, []);
+
+  return (
+    <div style={{ textAlign: 'center', padding: '2rem' }}>
+      <p>Kollus VOD Console로 이동 중입니다...</p>
+      <p>자동으로 이동되지 않으면 <a href="https://c-kr.kollus.com/login" target="_blank" rel="noopener noreferrer">여기를 클릭</a>하세요.</p>
+    </div>
+  );
+}

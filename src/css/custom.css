@@ -1596,3 +1596,26 @@ h3.anchor > code {
 }
 
 /* CSS for hello bar ends*/
+
+/* External link icon for sidebar items */
+.menu__link[data-external="true"]::after {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 4px;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' fill='none' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 2.5h7v7M2.5 9.5l7-7' stroke='%23666' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+  opacity: 0.7;
+}
+
+html[data-theme='dark'] .menu__link[data-external="true"]::after {
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' fill='none' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.5 2.5h7v7M2.5 9.5l7-7' stroke='%23ccc' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+.menu__link[data-external="true"]:hover::after {
+  opacity: 1;
+}
