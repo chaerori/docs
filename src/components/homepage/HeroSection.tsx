@@ -16,7 +16,8 @@ const PRODUCTS = [
     links: [
       { label: '서비스 가이드', href: '/guides/live-video/intro-video-conf'},
       { label: '개발 가이드', href: '/dev-guide/kollus-vod/api-integration' }
-    ]
+    ],
+    text: '동영상 서비스에서 필요한 모든 기능을 제공하는 VOD 통합 서비스'
   },
   {
     title: 'Kollus Live',
@@ -24,28 +25,32 @@ const PRODUCTS = [
     links: [
       { label: 'Console 시작하기', href: '/guides/voice-conf/intro-voice-conf'},
       { label: 'API 연동 시작하기', href: '/dev-guide/kollus-live/api-integration' }
-    ]
+    ],
+    text: '촬영부터 배포, 플레이어 등 라이브 스트리밍을 제공하는 서비스'
   },
   {
     title: 'Kollus Live Commerce',
     icon: VideoRegular,
     links: [
       { label: '서비스 가이드', href: '/guides/livestream/livestream-overview'},
-    ]
+    ],
+    text: '자사몰 또는 종합몰에서 라이브 커머스 방송을 진행할 수 있는 서비스'
   },
   {
     title: 'Charlla',
     icon: LiveRegular,
     links: [
       { label: '서비스 가이드', href: '/guides/livestream/livestream-overview'},
-    ]
+    ],
+    text: '온라인 쇼핑몰에서 숏폼을 게시하고 활용할 수 있는 서비스'
   },
   {
     title: 'Loomex',
     icon: LiveRegular,
     links: [
       { label: '서비스 가이드', href: '/guides/livestream/livestream-overview'},
-    ]
+    ],
+    text: '다양한 매체에 편리하게 콘텐츠를 배포하는 미디어 자산 관리 서비스'
   }
 ];
 
@@ -54,6 +59,7 @@ function HeroProduct({
   title,
   icon: Icon,
   links,
+  text,
 }: (typeof PRODUCTS)[0]) {
   return (
     <div
@@ -73,6 +79,12 @@ function HeroProduct({
             {/* {beta && <span className="font-normal text-text-400"> (Beta)</span>} */}
           </div>
         </h3>
+        
+        {text && (
+          <p className="mt-2 text-center text-sm text-text-400">
+            {text}
+          </p>
+        )}
         
         {links && (
           <div className="mt-4 flex flex-wrap justify-center gap-2">
