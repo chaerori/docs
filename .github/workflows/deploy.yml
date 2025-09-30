@@ -51,4 +51,4 @@ jobs:
           header: preview-url
           message: |
             ✅ Preview ready:
-            https://<YOUR_USER_OR_ORG>.github.io/<YOUR_REPO>/previews/pr-${{ github.event.number }}/
+            https://chaerori.github.io/docs/previews/pr-${{ github.event.number }}/
