@@ -11,6 +11,7 @@ const meta = {
   tagline: 'catenoid documentation',
   url: 'https://chaerori.github.io',
   baseUrl: process.env.BASE_URL || '/docs/',
+  organizationName: 'chaerori',
   projectName: 'docs',
   favicon: '/favicon.ico',
   i18n: {
