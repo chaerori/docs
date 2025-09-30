@@ -1,21 +1,31 @@
-name: Check for lint errors
-
+# .github/workflows/lint.yml
+name: Docs CI
 on:
   pull_request:
-    branches:
-      - '**'
+    paths:
+      - 'docs/**'
+      - 'i18n/**'
+      - 'docusaurus.config.js'
+      - 'sidebars.js'
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'i18n/**'
+      - 'docusaurus.config.js'
+      - 'sidebars.js'
 
 jobs:
-  lint:
+  build-and-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - run: npm run build    # onBrokenLinks=throw로 깨진 링크 잡힘
 
-      - name: npm install, lint
-        run: |
-          npm install
-          npm run lint
+      # 선택: 마크다운/맞춤법/외부 링크 체크
+      - run: npx markdownlint-cli2 "docs/**/*.md{,x}" || true
+      - run: npx cspell "docs/**/*.*" || true
+      - run: npx lychee --no-progress --verbose docs || true

@@ -1,36 +1,40 @@
-name: Build & Deploy (Docusaurus)
-
+# .github/workflows/deploy.yml  (PR Preview)
+name: Docs Preview
 on:
-  push:
-    branches: [ main ]        # PR이 auto-merge 되어 main에 머지되면 트리거
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'docs/**'
+      - 'i18n/**'
+      - 'docusaurus.config.js'
+      - 'sidebars.js'
 
 jobs:
-  build:
+  preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
-        with: { node-version: '20' }
-
-      - run: npm ci
-      - run: npm run build          # docusaurus build
-
-      - uses: actions/upload-pages-artifact@v3
         with:
-          path: build               # Docusaurus 기본 출력 디렉터리
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # PR 번호별 폴더로 gh-pages 브랜치에 퍼블리시
+      - name: Publish preview to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: build
+          destination_dir: previews/pr-${{ github.event.number }}
+
+      # PR에 프리뷰 URL 달아주기(덮어쓰기 방식)
+      - name: Comment preview URL
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: preview-url
+          message: |
+            ✅ Preview ready:
+            https://<YOUR_USER_OR_ORG>.github.io/<YOUR_REPO>/previews/pr-${{ github.event.number }}/
