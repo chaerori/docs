@@ -1,8 +1,92 @@
-# Default owners of the repository
-*       @dyte-in/docs
+# ---------------------------------------------------------
+# CODEOWNERS for Catenoid Docs (Docusaurus)
+# 우선순위: 더 구체적인 패턴이 일반 패턴보다 우선합니다.
+# ---------------------------------------------------------
 
-# Owners for JS, JSX, TS, and TSX files
-*.js    @dyte-in/web
-*.jsx   @dyte-in/web
-*.ts    @dyte-in/web
-*.tsx   @dyte-in/web
+# 0) 기본 폴백(레포 전체)
+#   - 어떤 규칙에도 매칭되지 않는 파일의 디폴트 오너
+#*                               @docs-core-team
+
+# 1) 리포/CI 메타
+#.github/**                      @docs-platform @devops-team
+#.github/workflows/**            @docs-platform @devops-team
+#.github/ISSUE_TEMPLATE/**       @docs-platform
+#.github/PULL_REQUEST_TEMPLATE.md @docs-platform
+#CODEOWNERS                      @docs-platform
+#.dockerignore                   @devops-team
+#.gitignore                      @devops-team
+
+# 2) 도큐사우루스 설정/레이아웃
+#docusaurus.config.js            @docs-platform
+#sidebars.js                     @docs-platform
+#src/**                          @docs-platform
+#static/**                       @docs-platform
+# 테마 번역(네비/푸터 등)
+#i18n/**/docusaurus-theme-classic/**  @docs-platform @loc-team
+
+# 3) 문서 원문(영문/기준 언어)
+# 상위 범주
+#docs/api/**                     @backend-team     @api-wg
+#docs/player-sdk/**              @player-wg        @docs-sdk
+#docs/callbacks/**               @backend-team     @lms-wg
+#docs/upload-api/**              @backend-team     @media-wg
+#docs/live-streaming/**          @live-wg
+#docs/drm/**                     @drm-team
+#docs/lms/**                     @lms-wg
+docs/guides/**                  @chaerori
+#docs/tutorials/**               @docs-guides
+#docs/reference/**               @docs-reference
+
+# 웹/리액트/킷 계열 (예: web-core, react-web-core, ui-kit, angular-ui-kit 등)
+#docs/web-core/**                @web-team         @player-wg
+#docs/react-web-core/**          @web-team         @player-wg
+#docs/react-ui-kit/**            @web-team
+#docs/ui-kit/**                  @web-team
+#docs/angular-ui-kit/**          @web-team
+
+# 모바일 SDK
+#docs/ios-sdk/**                 @ios-team         @player-wg
+#docs/android-sdk/**             @android-team     @player-wg
+
+# 4) i18n 번역 문서(ko, ja 등)
+#  - 번역팀이 1차 오너, 해당 도메인 팀을 공동 오너로 지정
+#  - 경로 예: i18n/ko/docusaurus-plugin-content-docs/current/...
+#i18n/**/docusaurus-plugin-content-docs/**                  @loc-team @docs-core-team
+#i18n/**/docusaurus-plugin-content-docs/**/api/**           @loc-team @backend-team
+#i18n/**/docusaurus-plugin-content-docs/**/player-sdk/**    @loc-team @player-wg
+#i18n/**/docusaurus-plugin-content-docs/**/web-core/**      @loc-team @web-team
+#i18n/**/docusaurus-plugin-content-docs/**/react-web-core/**@loc-team @web-team
+#i18n/**/docusaurus-plugin-content-docs/**/ui-kit/**        @loc-team @web-team
+#i18n/**/docusaurus-plugin-content-docs/**/ios-sdk/**       @loc-team @ios-team
+#i18n/**/docusaurus-plugin-content-docs/**/android-sdk/**   @loc-team @android-team
+#i18n/**/docusaurus-plugin-content-docs/**/drm/**           @loc-team @drm-team
+#i18n/**/docusaurus-plugin-content-docs/**/lms/**           @loc-team @lms-wg
+#i18n/**/docusaurus-plugin-content-docs/**/live-streaming/**@loc-team @live-wg
+#i18n/**/docusaurus-plugin-content-docs/**/upload-api/**    @loc-team @media-wg
+
+# 5) 이미지/다이어그램
+#  - 서비스별 소유 팀을 함께 지정하면 변경 시 빠른 리뷰 가능
+#docs/**/images/**               @docs-core-team   @design-team
+#static/img/**                   @docs-core-team   @design-team
+
+# 6) 예시 코드/스니펫
+#docs/**/examples/**             @docs-guides      @player-wg
+#docs/**/snippets/**             @docs-guides      @backend-team @web-team
+
+# 7) 린트/검사 설정(문서 품질 도구)
+#.markdownlint*                  @docs-platform
+#.cspell*                        @docs-platform     @loc-team
+#.eslintrc*                      @docs-platform
+
+# 8) 자동 생성/배포 출력물을 레포에 보관하는 경우(비권장)
+#  - 기본적으로 빌드 결과는 별도 브랜치/Pages artifact로 배포 권장
+# build/**                      @docs-platform
+
+# 9) 임시 스텁/리다이렉트 관리(운영상 중요)
+#docs/_stubs/**                  @docs-guides      @docs-platform
+# Redirects 플러그인 설정을 코드로 분리했다면:
+# redirects.config.js           @docs-platform
+
+# 10) 태그 기반 알림/리뷰어는 CODEOWNERS가 지원하지 않으므로
+#     GitHub Actions로 처리(참고용 주석)
+# .github/tag-map.yml           @docs-platform
