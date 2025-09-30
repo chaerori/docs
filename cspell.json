@@ -1,24 +1,7 @@
 {
-  "version": "0.2",
+  "version": "0.1",
   "language": "en-US",
   "words": [
-    "dyte",
-    "webrtc",
-    "proguard",
-    "dytesdk",
-    "Mbps",
-    "livestream",
-    "livestreaming",
-    "controlbar",
-    "prefs",
-    "Screenshare",
-    "quickstart",
-    "ktor",
-    "kotlinx",
-    "waitlist",
-    "webm",
-    "releasenotes",
-    "waitlisted",
-    "htmlui"
+    "kollus"
   ]
 }
