@@ -1,7 +1,7 @@
-# .github/workflows/deploy.yml  (PR Preview)
+# .github/workflows/deploy.yml  (PR Preview 용)
 name: Docs Preview
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     paths:
       - 'docs/**'
@@ -12,25 +12,34 @@ on:
 jobs:
   preview:
     runs-on: ubuntu-latest
+
+    # 👇 이 권한이 없으면 github-actions[bot]이 gh-pages에 못 씁니다
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - run: npm ci
       - run: npm run build
 
-      # PR 번호별 폴더로 gh-pages 브랜치에 퍼블리시
       - name: Publish preview to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}   # 기본 토큰 사용
           publish_branch: gh-pages
           publish_dir: build
           destination_dir: previews/pr-${{ github.event.number }}
+          # 👇 최초 생성 시 추천(빈 오브젝트 트리로 생성)
+          force_orphan: true
 
-      # PR에 프리뷰 URL 달아주기(덮어쓰기 방식)
       - name: Comment preview URL
         uses: marocchino/sticky-pull-request-comment@v2
         with:
