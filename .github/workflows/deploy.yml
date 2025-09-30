@@ -30,6 +30,11 @@ jobs:
       - run: npm ci
       - run: npm run build
 
+      - name: Build with preview baseUrl
+        run: |
+          export BASE_URL="/docs/previews/pr-${{ github.event.number }}/"
+          npm run build
+
       - name: Publish preview to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
