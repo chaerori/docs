@@ -10,7 +10,7 @@ const meta = {
   title: '카테노이드 서포트 센터',
   tagline: 'catenoid documentation',
   url: 'https://chaerori.github.io',
-  baseUrl: '/docs/',
+  baseUrl: process.env.BASE_URL || '/docs/',
   projectName: 'docs',
   favicon: '/favicon.ico',
   i18n: {
