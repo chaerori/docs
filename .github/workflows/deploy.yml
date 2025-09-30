@@ -39,8 +39,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}   # 기본 토큰 사용
-          publish_branch: gh-pages
-          publish_dir: build
+          publish_dir: ./build
           destination_dir: previews/pr-${{ github.event.number }}
           # 👇 최초 생성 시 추천(빈 오브젝트 트리로 생성)
           force_orphan: true
