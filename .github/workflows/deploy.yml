@@ -1,7 +1,7 @@
 # .github/workflows/deploy.yml  (PR Preview 용)
 name: Docs Preview
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
     paths:
       - 'docs/**'
@@ -16,6 +16,8 @@ jobs:
     # 👇 이 권한이 없으면 github-actions[bot]이 gh-pages에 못 씁니다
     permissions:
       contents: write
+      pull-requests: write
+      issues: write
 
     steps:
       - uses: actions/checkout@v4
