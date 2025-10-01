@@ -308,7 +308,7 @@ const config = {
           alt: '',
           src: '/favicon.ico',
         },
-        hideOnScroll: true,
+        hideOnScroll: false,
         items: [
           {
             label: '서비스 가이드',
@@ -414,24 +414,6 @@ const config = {
         searchParameters: {},
       },
     }),
-
-  // webpack: {
-  //   jsLoader: (isServer) => ({
-  //     loader: require.resolve('swc-loader'),
-  //     options: {
-  //       jsc: {
-  //         parser: {
-  //           syntax: 'typescript',
-  //           tsx: true,
-  //         },
-  //         target: 'es2017',
-  //       },
-  //       module: {
-  //         type: isServer ? 'commonjs' : 'es6',
-  //       },
-  //     },
-  //   }),
-  // },
 };
 
 module.exports = config;
