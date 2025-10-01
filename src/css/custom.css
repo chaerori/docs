@@ -1078,6 +1078,8 @@ details p {
 
 .DocSearch-Button {
   @apply lg:!rounded-md;
+  min-width: 200px !important;
+  width: 250px !important;
 }
 
 .DocSearch-Button-Key {

@@ -355,15 +355,19 @@ const config = {
             ],
           },
           {
+            label: 'Help',
+            to: 'https://www.catenoid.net/ko/', // 추후 end user 대상 트러블슈팅 가이드 연결
+          },
+          {
             type: 'search',
             position: 'right',
           },
-          {
+          /*{
             label: '가입하기',
             href: 'https://www.catenoid.net/ko/contact/',
             position: 'right',
             className: 'dev-portal-signup dev-portal-link',
-          },
+          },*/
           {
             type: 'localeDropdown',
             position: 'right',
