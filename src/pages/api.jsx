@@ -7,7 +7,6 @@ import { useHistory } from '@docusaurus/router';
 import clsx from 'clsx';
 
 import useBreakpoint from '../lib/useBreakpoint';
-import SectionsMenu from '../components/SectionsMenu';
 import RunInPostmanButton from '../components/RunInPostmanButton';
 import { Monitor } from 'react-feather';
 import Link from '@docusaurus/Link';
@@ -98,17 +97,6 @@ export default function Home() {
             </Link>
           )}
           {size === 'lg' && <RunInPostmanButton />}
-          <SectionsMenu
-            defaultValue={currentVersion}
-            values={[
-              { name: 'v1', docId: 'v1' },
-              { name: 'v2', docId: 'v2' },
-            ]}
-            onValueChange={(version) => {
-              router.push(`/api/?v=${version}`);
-            }}
-            className="compact"
-          />
         </div>
       </div>
       <APIElement

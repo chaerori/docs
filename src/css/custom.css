@@ -306,7 +306,7 @@ nav.menu {
 }
 
 .footer__copyright {
-  margin-top: 16px;
+  margin-top: 14px;
   font-size: 14px;
   @apply text-gray-400;
 }
@@ -1221,6 +1221,7 @@ html[data-theme='dark'] .livestream_sidebar_header > div > a::before {
 .navbar__item--locale {
   @apply mr-2;
 }
+
 
 .navbar__item--locale .navbar__link {
   @apply text-sm font-medium;

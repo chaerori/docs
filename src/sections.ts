@@ -20,20 +20,7 @@ export type Section = { docId: string } & (
     }
 );
 
-const SECTIONS: Section[] = [
-  {
-    name: 'Android',
-    docId: 'android',
-    icon: AndroidIcon,
-    section: 'mobile-ui-kit',
-  },
-  {
-    name: 'iOS',
-    docId: 'ios',
-    icon: AppleIcon,
-    section: 'mobile-ui-kit',
-  },
-];
+const SECTIONS: Section[] = [];
 
 export type SectionsGroup = {
   name: string;
@@ -42,14 +29,6 @@ export type SectionsGroup = {
   className?: string;
 };
 
-const SECTION_GROUPS: SectionsGroup[][] = [
-  [
-    {
-      name: 'UI Kit',
-      section: 'mobile-ui-kit',
-      description: 'Use our pre-built mobile UI Kit SDK, ready to go',
-    },
-  ],
-];
+const SECTION_GROUPS: SectionsGroup[][] = [];
 
 export { SECTIONS, SECTION_GROUPS };
