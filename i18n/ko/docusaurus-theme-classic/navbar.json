@@ -2,9 +2,6 @@
   "title": { "message": "서포트 센터" },
   "item.label.서비스 가이드": { "message": "서비스 가이드" },
   "item.label.개발 가이드": { "message": "개발 가이드" },
-  "item.label.API 레퍼런스": { "message": "API 레퍼런스" },
-  "item.label.플레이어 SDK": { "message": "플레이어 SDK" },
-  "item.label.데모 플레이어": { "message": "데모 플레이어" },
-  "item.label.문의하기": { "message": "문의하기" },
+  "item.label.개발자 도구": { "message": "개발자 도구" },
   "item.label.가입하기": { "message": "가입하기" }
 }

@@ -320,7 +320,7 @@ const config = {
             to: '/dev-guide',
           },
           {
-            label: 'API & SDK',
+            label: '개발자 도구',
             type: 'dropdown',
             className: 'sdks-dropdown',
             items: [
@@ -344,15 +344,15 @@ const config = {
                 label: 'Android SDK',
                 to: '/android',
               },
+              {
+                type: 'html',
+                value: '<hr style="margin: 0.5rem 0; border: none; border-top: 1px solid #e0e0e0;">',
+              },
+              {
+                label: '데모 플레이어',
+                to: '/demo-player',
+              },
             ],
-          },
-          {
-            label: '데모 플레이어',
-            to: '/demo-player',
-          },
-          {
-            label: '문의하기',
-            to: 'https://www.catenoid.net/ko/contact/',
           },
           {
             type: 'search',
