@@ -23,7 +23,7 @@ const sidebars = {
         'live-video/next-steps',
         {
           type: 'category',
-          label: 'Client Setup',
+          label: 'Live Video Client Setup',
           items: [
             'live-video/client-setup/index',
             'live-video/client-setup/javascript',
@@ -47,7 +47,7 @@ const sidebars = {
         'voice-conf/next-steps',
         {
           type: 'category',
-          label: 'Client Setup',
+          label: 'Voice Conference Client Setup',
           items: [
             'voice-conf/client-setup/index',
             'voice-conf/client-setup/javascript',
@@ -70,7 +70,7 @@ const sidebars = {
         'livestream/build-livestream-app',
         {
           type: 'category',
-          label: 'Client Setup',
+          label: 'Livestream Client Setup',
           items: [
             'livestream/client-setup/index',
             'livestream/client-setup/javascript',

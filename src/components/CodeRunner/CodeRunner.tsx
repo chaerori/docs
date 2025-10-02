@@ -1,5 +1,6 @@
 import {
   SandpackProvider,
+  SandpackLayout,
   SandpackPreview,
   SandpackCodeEditor,
   SandpackCodeViewer,
@@ -8,41 +9,35 @@ import React, { useState, useEffect } from 'react';
 import ReactBoilerplate from './ReactBoilerplate';
 import AngularBoilerplate from './AngularBoilerplate';
 import { useColorMode } from '@docusaurus/theme-common';
-import { atomDark, aquaBlue } from '@codesandbox/sandpack-themes';
+import { atomDark, aquaBlue } from "@codesandbox/sandpack-themes";
 
 type FrameworkType = 'react-ts' | 'angular';
 type HighlightLines = {
-  start: number;
-  end: number;
+  start: number,
+  end: number,
 };
 type CodeRunnerProps = {
-  files?: { [key: string]: string };
-  file?: string;
-  framework?: FrameworkType;
-  entry?: string;
-  highlight?: HighlightLines[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  additionalDecorators?: any[];
-  hide?: HighlightLines[];
-  minHeight?: string;
+  files?: { [key: string]: string },
+  file?: string,
+  framework?: FrameworkType,
+  entry?: string,
+  highlight?: HighlightLines[],
+  additionalDecorators?: any[],
+  hide?: HighlightLines[],
+  minHeight?: string
 };
 
 type GetFilesReturn = {
-  files: { [key: string]: string };
-  activeFile: string;
-  visibleFiles: string[];
-  scripts: string[];
-};
-const getFiles = (
-  framework: FrameworkType,
-  colorMode: string,
-  customFile: string,
-  files: { [key: string]: string } = {},
-): GetFilesReturn => {
+  files: { [key: string]: string },
+  activeFile: string,
+  visibleFiles: string[],
+  scripts: string[],
+}
+const getFiles = (framework: FrameworkType, colorMode: string, customFile: string, files: { [key: string]: string } = {}): GetFilesReturn => {
   if (framework == 'react-ts') {
     return {
-      files: {
-        '/App.tsx': ReactBoilerplate(colorMode),
+      files: { 
+        '/App.tsx' : ReactBoilerplate(colorMode),
         '/meeting.tsx': customFile,
       },
       activeFile: '/meeting.tsx',
@@ -50,20 +45,15 @@ const getFiles = (
       scripts: [],
     };
   }
-  if (framework == 'angular') {
+  if(framework == 'angular'){
     return {
-      files: {
+      files: { 
         '/src/app/app.component.html': `<dyte-meeting #meeting show-setup-screen="true"></dyte-meeting>`,
         '/src/app/app.component.ts': customFile,
         '/src/app/app.module.ts': AngularBoilerplate,
       },
       activeFile: '/src/app/app.component.ts',
-      visibleFiles: [
-        '/src/app/app.module.ts',
-        '/src/app/app.component.ts',
-        '/src/app/app.component.html',
-        ...Object.keys(files),
-      ],
+      visibleFiles: ['/src/app/app.module.ts', '/src/app/app.component.ts','/src/app/app.component.html', ...Object.keys(files)],
       scripts: [],
     };
   }
@@ -71,13 +61,13 @@ const getFiles = (
     activeFile: '/index.html',
     visibleFiles: ['/index.html'],
     files: {
-      '/index.html': customFile,
+      '/index.html': customFile
     },
     scripts: [
       'https://cdn.jsdelivr.net/npm/@dytesdk/web-core@1.31.0-stripped.2/dist/index.iife.js',
-      'https://assets.dyte.io/docs/web.js',
-    ],
-  };
+      'https://assets.dyte.io/docs/web.js'
+    ]
+  }
 };
 
 const getDeps = (framework: FrameworkType): { [key: string]: string } => {
@@ -92,14 +82,13 @@ const getDeps = (framework: FrameworkType): { [key: string]: string } => {
     return {
       '@dytesdk/angular-ui-kit': '1.66.0',
       '@dytesdk/web-core': '1.31.0-stripped.2',
-    };
+    }
   }
   return {};
 };
 
 const buildDecorators = (lines: HighlightLines[], hide: HighlightLines[]) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const cols: any[] = [];
+  let cols: any[] = [];
   lines.forEach((l) => {
     for (let i = l.start; i <= l.end; i++) {
       cols.push({ className: 'highlight', line: i });
@@ -114,41 +103,40 @@ const buildDecorators = (lines: HighlightLines[], hide: HighlightLines[]) => {
 };
 
 const getTheme = (theme: string) => {
-  if (theme === 'light') return aquaBlue;
+  if(theme === 'light') return aquaBlue;
   else return atomDark;
-};
+}
 
 export default function CodeRunner({
   file,
   files = {},
   framework = 'react-ts',
+  entry,
   highlight = [],
   additionalDecorators = [],
   hide = [],
-  minHeight = '480px',
+  minHeight = '480px'
 }: CodeRunnerProps) {
   const { colorMode } = useColorMode();
 
-  const filesObj = getFiles(framework, colorMode, file ?? '', files);
+  const filesObj = getFiles(framework, colorMode, file ?? '', files)
+;
   const deps = getDeps(framework);
 
-  const decorators = [
-    ...additionalDecorators,
-    ...buildDecorators(highlight, hide),
-  ];
+  const decorators = [...additionalDecorators, ...buildDecorators(highlight, hide)];
 
   const [editMode, setEditMode] = useState(decorators.length === 0);
 
   useEffect(() => {
     const clickListener = () => {
-      if (decorators.length !== 0 && editMode == true) {
+      if(decorators.length !== 0 && editMode == true) {
         setEditMode(false);
       }
-    };
+    }
     window.addEventListener('click', clickListener);
     return () => {
       window.removeEventListener('click', clickListener);
-    };
+    }
   }, [decorators.length, editMode]);
 
   return (
@@ -163,10 +151,7 @@ export default function CodeRunner({
       options={{
         activeFile: filesObj.activeFile,
         visibleFiles: filesObj.visibleFiles,
-        externalResources: [
-          'https://assets.dyte.io/docs/tailwind.js',
-          ...filesObj.scripts,
-        ],
+        externalResources: ['https://assets.dyte.io/docs/tailwind.js', ...filesObj.scripts],
       }}
       files={filesObj.files}
     >
@@ -184,13 +169,10 @@ export default function CodeRunner({
         </svg>
       </div>
       <div className="flex flex-col rounded-sm border border-secondary-700 mb-4">
-        <div
-          onClick={(e) => {
-            e.stopPropagation();
-            setEditMode(true);
-          }}
-          className="cursor-text"
-        >
+        <div onClick={(e) => {
+          e.stopPropagation();
+          setEditMode(true)
+        }} className="cursor-text">
           {editMode ? (
             <SandpackCodeEditor
               showLineNumbers
@@ -201,20 +183,20 @@ export default function CodeRunner({
                 flexShrink: 1,
                 flexBasis: 'max-content',
                 maxHeight: '500px',
-                overflow: 'scroll',
+                overflow: 'scroll'
               }}
             />
           ) : (
             <SandpackCodeViewer
-              // className="code-viewer"
-              initMode="immediate"
+              className="code-viewer"
+              initMode='immediate'
               decorators={decorators}
-              // style={{
-              //   flexGrow: 0,
-              //   flexShrink: 1,
-              //   flexBasis: 'max-content',
-              //   maxHeight: '500px',
-              // }}
+              style={{
+                flexGrow: 0,
+                flexShrink: 1,
+                flexBasis: 'max-content',
+                maxHeight: '500px',
+              }}
             />
           )}
         </div>

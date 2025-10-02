@@ -245,9 +245,9 @@ const resourcesHTML = fs.readFileSync('./src/snippets/resources.html', 'utf-8');
 const config = {
   ...meta,
   plugins,
-  future: {
+  /*future: {
     experimental_faster: true,
-  },
+  },*/
 
   trailingSlash: false,
   themes: ['@docusaurus/theme-live-codeblock', '@docusaurus/theme-mermaid'],
