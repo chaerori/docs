@@ -1,0 +1,492 @@
+openapi: 3.0.3
+info:
+  title: Kollus VOD API
+  description: Kollus VOD API를 사용하여 비디오 온 디맨드 서비스를 구현할 수 있습니다.
+  version: 1.0.0
+  contact:
+    name: Kollus Support
+    url: https://www.catenoid.net/ko/contact/
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://api.kollus.com/v1
+    description: Production server
+  - url: https://staging-api.kollus.com/v1
+    description: Staging server
+
+security:
+  - BearerAuth: []
+
+paths:
+  /videos:
+    get:
+      summary: 비디오 목록 조회
+      description: 업로드된 비디오 목록을 조회합니다.
+      tags:
+        - Videos
+      parameters:
+        - name: page
+          in: query
+          description: 페이지 번호
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          description: 페이지당 항목 수
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: category
+          in: query
+          description: 카테고리 필터
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoListResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      summary: 비디오 업로드
+      description: 새로운 비디오를 업로드합니다.
+      tags:
+        - Videos
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+                - title
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 비디오 파일
+                title:
+                  type: string
+                  description: 비디오 제목
+                description:
+                  type: string
+                  description: 비디오 설명
+                category:
+                  type: string
+                  description: 카테고리
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  description: 태그 목록
+      responses:
+        '201':
+          description: 업로드 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoUploadResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '413':
+          description: 파일 크기 초과
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /videos/{video_id}:
+    get:
+      summary: 비디오 상세 조회
+      description: 특정 비디오의 상세 정보를 조회합니다.
+      tags:
+        - Videos
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          description: 비디오 ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoDetailResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    put:
+      summary: 비디오 정보 수정
+      description: 비디오의 메타데이터를 수정합니다.
+      tags:
+        - Videos
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          description: 비디오 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoUpdateRequest'
+      responses:
+        '200':
+          description: 수정 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideoDetailResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+    delete:
+      summary: 비디오 삭제
+      description: 비디오를 삭제합니다.
+      tags:
+        - Videos
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          description: 비디오 ID
+          schema:
+            type: string
+      responses:
+        '204':
+          description: 삭제 성공
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /videos/{video_id}/stream:
+    post:
+      summary: 스트리밍 URL 생성
+      description: 비디오의 스트리밍 URL을 생성합니다.
+      tags:
+        - Streaming
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          description: 비디오 ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamRequest'
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /videos/{video_id}/analytics:
+    get:
+      summary: 비디오 분석 데이터 조회
+      description: 비디오의 재생 통계를 조회합니다.
+      tags:
+        - Analytics
+      parameters:
+        - name: video_id
+          in: path
+          required: true
+          description: 비디오 ID
+          schema:
+            type: string
+        - name: start_date
+          in: query
+          description: 시작 날짜 (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: end_date
+          in: query
+          description: 종료 날짜 (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsResponse'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Video:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 비디오 ID
+        title:
+          type: string
+          description: 비디오 제목
+        description:
+          type: string
+          description: 비디오 설명
+        category:
+          type: string
+          description: 카테고리
+        tags:
+          type: array
+          items:
+            type: string
+          description: 태그 목록
+        duration:
+          type: integer
+          description: 재생 시간 (초)
+        file_size:
+          type: integer
+          description: 파일 크기 (바이트)
+        status:
+          type: string
+          enum: [uploading, processing, ready, error]
+          description: 처리 상태
+        created_at:
+          type: string
+          format: date-time
+          description: 생성 시간
+        updated_at:
+          type: string
+          format: date-time
+          description: 수정 시간
+
+    VideoListResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            videos:
+              type: array
+              items:
+                $ref: '#/components/schemas/Video'
+            pagination:
+              $ref: '#/components/schemas/Pagination'
+
+    VideoDetailResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          $ref: '#/components/schemas/Video'
+
+    VideoUploadResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            video_id:
+              type: string
+              description: 업로드된 비디오 ID
+            upload_url:
+              type: string
+              description: 업로드 URL (청크 업로드용)
+
+    VideoUpdateRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          description: 비디오 제목
+        description:
+          type: string
+          description: 비디오 설명
+        category:
+          type: string
+          description: 카테고리
+        tags:
+          type: array
+          items:
+            type: string
+          description: 태그 목록
+
+    StreamRequest:
+      type: object
+      properties:
+        quality:
+          type: string
+          enum: [auto, 360p, 480p, 720p, 1080p, 4K]
+          default: auto
+          description: 재생 품질
+        expires_in:
+          type: integer
+          default: 3600
+          description: URL 만료 시간 (초)
+        drm_enabled:
+          type: boolean
+          default: false
+          description: DRM 보호 활성화
+
+    StreamResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            stream_url:
+              type: string
+              description: 스트리밍 URL
+            expires_at:
+              type: string
+              format: date-time
+              description: URL 만료 시간
+            quality_options:
+              type: array
+              items:
+                $ref: '#/components/schemas/QualityOption'
+
+    QualityOption:
+      type: object
+      properties:
+        quality:
+          type: string
+          description: 품질 이름
+        url:
+          type: string
+          description: 해당 품질의 스트리밍 URL
+
+    AnalyticsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            total_views:
+              type: integer
+              description: 총 조회수
+            unique_viewers:
+              type: integer
+              description: 고유 시청자 수
+            average_watch_time:
+              type: integer
+              description: 평균 시청 시간 (초)
+            completion_rate:
+              type: number
+              format: float
+              description: 완료율 (0-1)
+            quality_distribution:
+              type: object
+              additionalProperties:
+                type: number
+                format: float
+              description: 품질별 시청 비율
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: 현재 페이지
+        per_page:
+          type: integer
+          description: 페이지당 항목 수
+        total:
+          type: integer
+          description: 전체 항목 수
+        total_pages:
+          type: integer
+          description: 전체 페이지 수
+
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: error
+        message:
+          type: string
+          description: 오류 메시지
+        code:
+          type: string
+          description: 오류 코드
+
+  responses:
+    BadRequestError:
+      description: 잘못된 요청
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    UnauthorizedError:
+      description: 인증 실패
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFoundError:
+      description: 리소스를 찾을 수 없음
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalServerError:
+      description: 서버 내부 오류
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+tags:
+  - name: Videos
+    description: 비디오 관리
+  - name: Streaming
+    description: 스트리밍
+  - name: Analytics
+    description: 분석 데이터
